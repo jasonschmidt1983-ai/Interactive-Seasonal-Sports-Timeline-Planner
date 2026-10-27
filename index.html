@@ -86,6 +86,48 @@
 .wheel.is-dragging-arm{touch-action:none;cursor:grabbing}
 .wheel.is-dragging-arm .month-arm-hit{cursor:grabbing}
 
+
+.campaign-calendar-panel{margin:0 0 16px;border:1px solid #cdd8e4;border-radius:8px;overflow:hidden;background:#fff;color:#263746}
+.campaign-calendar-header{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 16px;background:#e8f1f8;border-bottom:1px solid #d8e0e8}
+.campaign-calendar-kicker{margin:0 0 2px;color:#526b82;text-transform:uppercase;letter-spacing:.08em;font-size:10px;font-weight:700}
+.campaign-calendar-header h4{margin:0;color:#002855;font-size:17px}
+.campaign-calendar-lens{flex:0 0 auto;padding:5px 9px;border-radius:5px;background:#003a70;color:#fff;font-size:11px;font-weight:700}
+.campaign-calendar-note{margin:0;padding:9px 15px;background:#fff8e8;border-bottom:1px solid #eadcb9;border-left:4px solid #ac8400;color:#5e512f;font-size:11px;line-height:1.45}
+.campaign-events{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;padding:12px}
+.campaign-event{min-width:0;padding:11px 12px;background:#fff;border:1px solid #d8e0e8;border-left:3px solid #7fa9ae;border-radius:7px}
+.campaign-event-top{display:flex;align-items:flex-start;justify-content:space-between;gap:8px}
+.campaign-date{color:#003a70;font-size:11px;font-weight:750}
+.campaign-status{max-width:65%;padding:3px 7px;border-radius:10px;text-align:right;font-size:10px;line-height:1.25;font-weight:700}
+.campaign-status.confirmed{background:#e5f3e9;color:#27613a}
+.campaign-status.provisional{background:#fff0cf;color:#775700}
+.campaign-status.seasonal{background:#e8eff5;color:#3b5369}
+.campaign-event h5{margin:6px 0 4px;color:#002855;font-size:14px;line-height:1.35}
+.campaign-activation{display:inline-block;margin:0 0 6px;padding:3px 7px;border-radius:4px;background:#edf4f8;color:#31516b;font-size:10px;font-weight:700}
+.campaign-detail,.campaign-action{margin:4px 0 0;color:#3e4c5b;font-size:12px;line-height:1.45}
+.campaign-connection{color:#5b6876}
+.campaign-action{padding-top:5px;border-top:1px solid #edf0f3}
+.campaign-footer{display:flex;flex-direction:column;gap:2px;margin:7px 0 0;color:#6a7785;font-size:10px;line-height:1.4}
+.campaign-empty{grid-column:1/-1;margin:4px;color:#687586;font-size:13px;font-style:italic}
+@media(max-width:680px){.campaign-events{grid-template-columns:1fr;padding:9px}.campaign-calendar-header{align-items:flex-start}.campaign-calendar-lens{max-width:45%;text-align:center}.campaign-status{max-width:58%}}
+
+
+.campaign-links{display:flex;flex-wrap:wrap;gap:6px;margin:2px 0 7px}
+.campaign-link{display:inline-flex;align-items:center;max-width:100%;padding:4px 7px;border:1px solid #c7dced;border-radius:5px;background:#f4f8fb;color:#004778;font-size:10px;font-weight:700;line-height:1.35;text-decoration:none;overflow-wrap:anywhere}
+.campaign-link:hover,.campaign-link:focus-visible{background:#003a70;color:#fff;border-color:#003a70;outline:2px solid #ffcf70;outline-offset:2px}
+
+
+.campaign-card-tools{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;padding:12px 12px 0}
+.campaign-filter{display:grid;gap:4px;color:#435466;font-size:11px;font-weight:700}
+.campaign-filter select{width:100%;min-width:0;min-height:34px;padding:6px 26px 6px 8px;border:1px solid #c9d5df;border-radius:5px;background:#fff;color:#24384d;font:inherit;font-size:12px}
+.campaign-filter select:focus-visible{outline:2px solid #003a70;outline-offset:2px}
+.campaign-filter-summary{margin:7px 12px 0;color:#667586;font-size:11px}
+.external-link-icon{flex:0 0 13px;width:13px;height:13px;fill:currentColor}
+.campaign-link{gap:5px}
+.campaign-type-row{display:flex;flex-wrap:wrap;align-items:center;gap:6px;margin:0 0 6px}
+.campaign-type-row .campaign-activation{margin:0}
+.campaign-type-badge{display:inline-block;padding:3px 7px;border-radius:4px;background:#e8eff5;color:#38546b;font-size:10px;font-weight:700;line-height:1.35}
+@media(max-width:680px){.campaign-card-tools{grid-template-columns:1fr;gap:8px;padding:10px 9px 0}.campaign-filter-summary{margin:7px 9px 0}}
+
 </style>
 </head>
 <body>
@@ -102,7 +144,7 @@
     <aside class="sidecard"><h2>Calendar insight</h2><p class="hint">Drag the blue month arm around the wheel or scrub the month slider to track phases. Click a sport to isolate it on the wheel; click it again to show all.</p><h3 id="phase-heading" style="font-size:13px;margin:0 0 8px">Active phases this month</h3><div class="code-list" id="code-list"></div></aside>
   </section>
   <section class="metrics" aria-label="Current calendar summary"><div class="metric"><div class="metric-label">Current Focus</div><div class="metric-value" id="focus">Jan Planning</div></div><div class="metric"><div class="metric-label">Pre-Season Codes</div><div class="metric-value accent" id="pre-count">0 Codes</div></div><div class="metric"><div class="metric-label">Peak Cross-Over</div><div class="metric-value green" id="cross-over">—</div></div></section>
-  <section class="controls"><h2>Explore Calendar Timeline Matrix</h2><div class="slider-row"><label class="sr-only" for="month-slider">Select month</label><input id="month-slider" type="range" min="0" max="11" value="0"><output class="month-box" id="month-output" for="month-slider">Jan</output></div><div class="phase-filter-block"><h2>Filter Active Seasonal Phase</h2><div class="phase-tabs" role="group" aria-label="Filter by seasonal phase"><button class="active" data-phase="all">All Phases</button><button data-phase="pre">Pre-Season</button><button data-phase="mid">Mid-Season</button><button data-phase="post">Post-Season</button><button data-phase="finals">Finals</button><button data-phase="off">Off-Season</button></div><details class="phase-custom"><summary>Customize phase filters &amp; status badges</summary><div class="custom-grid" id="custom-grid"><span class="head">Phase</span><span class="head">Badge / filter label</span><span class="head">Colour</span><span class="head">Filter</span></div><button class="reset-custom" id="reset-custom" type="button">Reset to defaults</button></details><div class="recommendation"><span class="info" aria-hidden="true">●</span><div><strong>Coordinator Engagement Window Recommendation:</strong><br><span id="recommendation">Use the wheel and phase filters to identify quieter windows for club support.</span></div></div></div><section class="strategy-dashboard" id="coordinator-dashboard" aria-labelledby="strategy-current-focus">
+  <section class="controls"><h2>Explore Calendar Timeline Matrix</h2><div class="slider-row"><label class="sr-only" for="month-slider">Select month</label><input id="month-slider" type="range" min="0" max="11" value="0"><output class="month-box" id="month-output" for="month-slider">Jan</output></div><div class="phase-filter-block"><h2>Filter Active Seasonal Phase</h2><div class="phase-tabs" role="group" aria-label="Filter by seasonal phase"><button class="active" data-phase="all">All Phases</button><button data-phase="pre">Pre-Season</button><button data-phase="mid">Mid-Season</button><button data-phase="post">Post-Season</button><button data-phase="finals">Finals</button><button data-phase="off">Off-Season</button></div><details class="phase-custom"><summary>Customise phase filters &amp; status badges</summary><div class="custom-grid" id="custom-grid"><span class="head">Phase</span><span class="head">Badge / filter label</span><span class="head">Colour</span><span class="head">Filter</span></div><button class="reset-custom" id="reset-custom" type="button">Reset to defaults</button></details><div class="recommendation"><span class="info" aria-hidden="true">●</span><div><strong>Coordinator Engagement Window Recommendation:</strong><br><span id="recommendation">Use the wheel and phase filters to identify quieter windows for club support.</span></div></div></div><section class="strategy-dashboard" id="coordinator-dashboard" aria-labelledby="strategy-current-focus">
   <div class="strategy-header">
     <div><p class="strategy-kicker">Coordinator Strategy</p><h3 id="strategy-current-focus">Current Focus: January Planning</h3><p class="strategy-filter-note" id="strategy-filter-note" hidden>Sport-specific lists are filtered to this code; general month guidance and risks remain visible.</p></div>
     <div class="strategy-badges" aria-live="polite"><span id="badge-capacity" class="strategy-badge capacity-high">Capacity: High · Off-season planning</span><span id="badge-blackout" class="strategy-badge blackout-clear">No blackout zones</span></div>
@@ -118,6 +160,17 @@
     <p class="funding-caption">Monthly planning prompts from the supplied notes. Program names, eligibility, amounts and dates can change; confirm current details with the funder before advising clubs or applying.</p>
     <ul id="commercial-funding-list" aria-live="polite"></ul>
   </div>
+  <section class="campaign-calendar-panel" id="campaign-calendar-panel" aria-labelledby="campaign-calendar-title">
+    <div class="campaign-calendar-header"><div><p class="campaign-calendar-kicker">Good Sports · 2027 annual campaign calendar</p><h4 id="campaign-calendar-title">January 2027</h4></div><span class="campaign-calendar-lens" id="campaign-calendar-lens">All codes</span></div>
+    <p class="campaign-calendar-note">Month follows the wheel and timeline slider. Links open official campaign, organiser or authoritative resource pages in a new tab; some pages show the latest completed year rather than a 2027 listing. Dates and status labels are from the supplied brief, not independently verified—confirm details with organisers, especially items marked indicative, expected or TBC. Apply local cultural guidance and approved wellbeing resources.</p>
+    <div class="campaign-card-tools" role="group" aria-label="Filter and sort campaign cards">
+      <label class="campaign-filter"><span>Link availability</span><select id="campaign-link-filter"><option value="all">Any official link</option><option value="direct">Campaign or event website</option><option value="resource">Official guidance or resource</option><option value="none">No verified link</option></select></label>
+      <label class="campaign-filter"><span>Campaign type</span><select id="campaign-type-filter"><option value="all">All types</option><option value="core">Core opportunity</option><option value="targeted">Targeted</option><option value="partnership">Partnership-led</option><option value="local">Monitor / locally guided</option><option value="seasonal">Seasonal / operational</option></select></label>
+      <label class="campaign-filter"><span>Sort cards</span><select id="campaign-sort"><option value="calendar">Calendar order</option><option value="links">Direct links first</option><option value="type">Campaign type</option></select></label>
+    </div>
+    <p class="campaign-filter-summary" id="campaign-filter-summary" aria-live="polite">Showing 0 cards</p>
+    <div class="campaign-events" id="campaign-events" aria-live="polite"></div>
+  </section>
   <div class="strategy-grid">
     <article class="strategy-card"><h4><span class="strategy-icon" aria-hidden="true">💡</span>Good Sports Engagement Targets</h4><ul id="opportunities-list"></ul><h4 class="strategy-subhead"><span class="strategy-icon" aria-hidden="true">🏆</span>NSW / ACT Tournament Watchlist</h4><ul id="tournaments-list"></ul></article>
     <article class="strategy-card risks" id="panel-risks"><h4><span class="strategy-icon" aria-hidden="true">⚠</span>Strategic Risks &amp; Compliance</h4><ul id="risks-list"></ul></article>
@@ -172,6 +225,818 @@ const coordinatorStrategyData={
  Nov:{focusText:'November Culture Building',capacity:'Capacity: High · stable routine',capacityLevel:'high',blackout:null,criticalTurf:false,turfInfo:'Summer outfields are active; heat, hydration and irrigation needs vary by site. Follow local ground-care advice and each sport’s heat-safety guidance.',commercialFunding:["ACT investment scheme deadlines|Supplied notes point to a mid-November closure; confirm the exact date, time and portal instructions with the funder.", "Submission readiness|Offer early help with quotes, budgets and text fields to reduce last-minute portal problems."],opportunities:["Clubhouse visits|Check in during summer training on club culture, responsible service and water availability.", "Infrastructure|Share relevant community-facility and equipment funding resources with resting winter committees."],workloadCrunch:["Summer codes|Check routine score verification and results-publishing schedules in association portals."],tournaments:["Volleyball ACT Open Beach Series|Candidate event from the supplied notes; verify the event schedule and locations.", "Cricket ACT Country Cups|Candidate event from the supplied notes; confirm current regional fixtures."],risks:['Heat requires clubs to follow current hydration, cancellation and rescheduling policies.','Winter committees may be less responsive between seasons.']},
  Dec:{focusText:'December Shutdown Wrap',capacity:'Capacity: Low · holiday closures',capacityLevel:'low',blackout:null,criticalTurf:false,turfInfo:'Summer grounds remain in use, but council and facility services may reduce over holiday periods. Confirm access, maintenance and emergency contacts before closures.',commercialFunding:["NSW Local Sport Grant outcomes|Monitor Office of Sport notices for decisions and agreement steps; announcement dates vary.", "Holiday portal availability|Check agency service hours and portal schedules; do not assume all systems close over holidays.", "Implementation planning|Congratulate successful clubs and help schedule safe delivery, reporting and budget tracking for the new year."],opportunities:["Volunteer appreciation|Share recognition resources and thank-you templates with active clubs.", "Early booking|Invite winter clubs to schedule January planning before the holiday break."],workloadCrunch:["Summer codes|Check portal support hours and holiday closures; ask associations whether any dates change over the break."],tournaments:["ACT Swimming development meets|Candidate event from the supplied notes; check the current summer meet calendar.", "Cricket ACT Junior Big Bash|Candidate event from the supplied notes; verify dates and participating locations."],risks:['Volunteer communication may slow from mid-December as people take holidays.','End-of-year events may need clear safety and incident-response arrangements.']}
 };
+const coordinatorCampaignCalendar2027={
+  "Jan": [
+    {
+      "date": "1 Jan–late Jan",
+      "name": "New Year & summer holiday safety",
+      "status": "Seasonal period · annual",
+      "activation": "Targeted",
+      "audience": "Summer sports; licensed clubs; clubs holding holiday functions, tournaments or tours",
+      "connection": "Safe celebrations, alcohol management, transport and family-friendly environments",
+      "action": "Prioritise clubs with January events. Check transport, food, alcohol-free choices and a responsible event lead. Keep messaging practical and non-stigmatising.",
+      "lead": "4–6 weeks; supplied notes recommend starting in November",
+      "outcome": "One practical safety improvement planned.",
+      "links": [
+        {
+          "url": "https://www.health.gov.au/news/stay-safe-outdoors-this-summer",
+          "label": "Australian Government summer outdoor safety guidance",
+          "source_name": "Australian Government Department of Health, Disability and Ageing",
+          "page_title": "Stay safe outdoors this summer",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "26 Jan 2027",
+      "name": "Australia Day / Survival Day considerations",
+      "status": "Public holiday · supplied as confirmed",
+      "activation": "Monitor / locally led",
+      "audience": "Clubs involved in named council, community or culturally specific events",
+      "connection": "Respectful local engagement",
+      "action": "Monitor local programs and follow local Aboriginal community guidance. Avoid generic outreach and assumptions about how members view the day.",
+      "lead": "Only where there is a named local event",
+      "outcome": "Appropriate, locally guided engagement.",
+      "links": [
+        {
+          "url": "https://antar.org.au/issues/survival-day/",
+          "label": "Survival Day",
+          "source_name": "ANTAR (Australians for Native Title and Reconciliation)",
+          "page_title": "Survival Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    }
+  ],
+  "Feb": [
+    {
+      "date": "5–7 Feb 2027",
+      "name": "National Multicultural Festival",
+      "status": "Confirmed in supplied notes · Canberra, ACT",
+      "activation": "Partnership-led · high ACT value",
+      "audience": "ACT clubs, multicultural sporting clubs, inclusion-focused clubs and associations seeking participation growth",
+      "connection": "Belonging, inclusive club culture, family-friendly environments and partnerships",
+      "action": "Identify participating clubs and community partners; use the festival for introductions, then arrange follow-up meetings. Avoid a generic stall without an identified audience or follow-up plan.",
+      "lead": "6–8 weeks before",
+      "outcome": "New introductions and follow-up meetings.",
+      "links": [
+        {
+          "url": "https://multiculturalfestival.com.au/",
+          "label": "National Multicultural Festival",
+          "source_name": "National Multicultural Festival / ACT Government",
+          "page_title": "National Multicultural Festival",
+          "kind": "event",
+          "verified": true
+        }
+      ],
+      "campaignType": "partnership"
+    },
+    {
+      "date": "February · exact Australian date TBC",
+      "name": "Safer Internet Day",
+      "status": "Research required · verify 2027 activation",
+      "activation": "Targeted",
+      "audience": "Junior clubs or clubs that identify online conduct or communication concerns",
+      "connection": "Safe club culture and member conduct",
+      "action": "Use only where relevant; connect online expectations to existing codes of conduct and approved safeguarding resources.",
+      "lead": "Confirm timing with organiser",
+      "outcome": "Club reviews how conduct expectations apply online.",
+      "links": [
+        {
+          "url": "https://better-internet-for-kids.europa.eu/en/events/safer-internet-day-sid-2027",
+          "label": "Safer Internet Day 2027",
+          "source_name": "Better Internet for Kids (European Commission; Insafe Coordinator)",
+          "page_title": "Safer Internet Day (SID) 2027",
+          "kind": "event",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    }
+  ],
+  "Mar": [
+    {
+      "date": "2–8 Mar 2027",
+      "name": "NSW Women’s Week",
+      "status": "Confirmed in supplied notes · NSW priority",
+      "activation": "Core opportunity · high value",
+      "audience": "Women’s and girls’ clubs, mixed clubs, codes growing female participation and women leaders",
+      "connection": "Inclusive participation, leadership and safe environments",
+      "action": "Recognise women leading clubs—as coaches, officials, committee members and volunteers. Connect with local council or state-funded activities; consider a genuine local case study.",
+      "lead": "6–8 weeks before",
+      "outcome": "A leader recognised, partnership developed or meeting secured.",
+      "links": [
+        {
+          "url": "https://www.nsw.gov.au/departments-and-agencies/women-nsw/awards-and-events/nsw-womens-week-2027",
+          "label": "NSW Women’s Week 2027",
+          "source_name": "Women NSW, NSW Government",
+          "page_title": "NSW Women’s Week 2027",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "8 Mar 2027",
+      "name": "International Women’s Day + Canberra Day",
+      "status": "Fixed annual date / ACT public holiday per supplied notes",
+      "activation": "Targeted recognition / local partnership",
+      "audience": "Clubs with women’s teams or leaders; ACT clubs participating in local community events",
+      "connection": "Meaningful recognition and locally guided engagement",
+      "action": "Treat International Women’s Day as part of NSW Women’s Week, not a competing campaign. For Canberra Day, check the ACT events program and include named sporting/community activity rather than generic holiday outreach.",
+      "lead": "",
+      "outcome": "",
+      "links": [
+        {
+          "url": "https://unwomen.org.au/un-women-australia-asks-how-much-longer-as-gender-equality-slips-further-out-of-reach/",
+          "label": "2027 International Women’s Month theme announcement",
+          "source_name": "UN Women Australia",
+          "page_title": "UN Women Australia Asks: How Much Longer?",
+          "kind": "campaign",
+          "verified": true
+        },
+        {
+          "url": "https://www.act.gov.au/__data/assets/pdf_file/0018/2327004/ACT-Public-Holidays-2027.pdf",
+          "label": "ACT 2027 public holidays",
+          "source_name": "ACT Government — Chief Minister, Treasury and Economic Development Directorate",
+          "page_title": "ACT PUBLIC HOLIDAYS 2027",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "partnership"
+    },
+    {
+      "date": "March 2027 · dates TBC",
+      "name": "Neurodiversity Celebration Week",
+      "status": "Indicative · organiser confirmation required",
+      "activation": "Targeted",
+      "audience": "Junior clubs, all-abilities programs and clubs reviewing member or volunteer communication",
+      "connection": "Accessible communication, participation and belonging",
+      "action": "Work through disability-inclusion partners; consider sensory environments, communication formats and flexible participation. Centre lived experience and avoid assumptions.",
+      "lead": "",
+      "outcome": "One practical accessibility improvement or partner connection.",
+      "links": [
+        {
+          "url": "https://www.neurodiversityweek.com/events-2027",
+          "label": "2027 Events Schedule",
+          "source_name": "Neurodiversity Celebration Week",
+          "page_title": "Neurodiversity Celebration Week — 2027 Events Schedule",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "Around 21 Mar 2027 · dates TBC",
+      "name": "Harmony Week",
+      "status": "Indicative · 2027 dates not confirmed",
+      "activation": "Core inclusion opportunity · high value",
+      "audience": "Multicultural clubs, family clubs, growth-focused clubs and associations",
+      "connection": "Belonging, cultural inclusion and community partnerships",
+      "action": "Support existing club events and connect with councils or multicultural services. Offer family-friendly, alcohol-free participation options; avoid superficial activities without community involvement.",
+      "lead": "6–8 weeks before",
+      "outcome": "A club-community partnership or inclusive participation activity.",
+      "links": [
+        {
+          "url": "https://www.harmony.gov.au/",
+          "label": "Harmony Week official campaign",
+          "source_name": "Australian Government — Department of Home Affairs",
+          "page_title": "Harmony Week - Everyone belongs",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    }
+  ],
+  "Apr": [
+    {
+      "date": "7–17 Apr 2027",
+      "name": "NSW Youth Week · “Next Up”",
+      "status": "Confirmed in supplied notes · NSW priority",
+      "activation": "Core opportunity · high value",
+      "audience": "Junior/youth clubs and clubs seeking younger volunteers or leaders",
+      "connection": "Youth voice, belonging and protective environments",
+      "action": "Contact councils early and connect selected clubs to youth-led activities. Listen to young members rather than designing for them; avoid using young people only as promotion.",
+      "lead": "8–12 weeks before",
+      "outcome": "Youth-led activity, council introduction or stronger youth participation.",
+      "links": [
+        {
+          "url": "https://www.nsw.gov.au/arts-and-culture/nsw-youth-week",
+          "label": "NSW Youth Week",
+          "source_name": "NSW Government — Office for Youth",
+          "page_title": "NSW Youth Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "7 Apr 2027",
+      "name": "World Health Day",
+      "status": "Fixed annual date",
+      "activation": "Monitor",
+      "audience": "Clubs already running a health, participation or wellbeing initiative",
+      "connection": "Support existing health and wellbeing work",
+      "action": "Use the date to support an existing club or council initiative; do not launch a separate mass campaign.",
+      "lead": "",
+      "outcome": "Local initiative supported.",
+      "links": [
+        {
+          "url": "https://www.who.int/campaigns/world-health-day",
+          "label": "World Health Day",
+          "source_name": "World Health Organization (WHO)",
+          "page_title": "World Health Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    }
+  ],
+  "May": [
+    {
+      "date": "17–23 May 2027",
+      "name": "National Volunteer Week",
+      "status": "Confirmed in supplied notes · program-wide priority",
+      "activation": "Core opportunity · very high value",
+      "audience": "All community sporting clubs",
+      "connection": "Volunteer recognition, retention and club sustainability",
+      "action": "Thank Good Sports contacts personally; recognise genuine contributions and re-engage inactive clubs through appreciation, not another administrative request. Work with councils/associations on volunteer stories or awards.",
+      "lead": "6–8 weeks before",
+      "outcome": "Relationship renewed, volunteer recognised or meeting secured.",
+      "links": [
+        {
+          "url": "https://www.volunteeringaustralia.org/get-involved/nationalvolunteerweek/",
+          "label": "National Volunteer Week",
+          "source_name": "Volunteering Australia",
+          "page_title": "National Volunteer Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "May 2027 · dates TBC",
+      "name": "National Road Safety Week",
+      "status": "Indicative · 2027 dates not confirmed",
+      "activation": "Targeted Good Sports theme · high value",
+      "audience": "Regional/remote clubs, travelling teams and clubs holding functions or tournaments",
+      "connection": "Safe transport and road-harm prevention",
+      "action": "Prioritise real travel contexts. Encourage designated transport and fatigue planning; consider association-level messaging. Avoid graphic material or advice outside the coordinator’s expertise.",
+      "lead": "4–6 weeks before",
+      "outcome": "Safe-transport planning reviewed or added to an event plan.",
+      "links": [
+        {
+          "url": "https://sarahgroup.org/nrsw",
+          "label": "National Road Safety Week",
+          "source_name": "Safer Australian Roads and Highways (SARAH) Group",
+          "page_title": "National Road Safety Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "26 May 2027",
+      "name": "National Sorry Day",
+      "status": "Fixed annual date",
+      "activation": "Locally guided",
+      "audience": "Clubs with existing Aboriginal community partnerships or participation",
+      "connection": "Respectful relationship-building",
+      "action": "Listen to local Aboriginal organisations and community leaders. Support established community-led activity where invited; do not use the occasion for promotional outreach.",
+      "lead": "",
+      "outcome": "Established local activity supported respectfully.",
+      "links": [
+        {
+          "url": "https://healingfoundation.org.au/stolen-generations/national-sorry-day/",
+          "label": "National Sorry Day",
+          "source_name": "The Healing Foundation",
+          "page_title": "National Sorry Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    },
+    {
+      "date": "27 May–3 Jun 2027",
+      "name": "National Reconciliation Week",
+      "status": "Confirmed fixed annual dates per supplied notes",
+      "activation": "Core opportunity · local guidance",
+      "audience": "All clubs, especially those with Aboriginal members, partnerships or community programs",
+      "connection": "Respectful club culture, community relationships and belonging",
+      "action": "Support practical actions and established local events. Seek guidance before using cultural stories, images or artwork; avoid tokenism or shifting educational work onto Aboriginal people.",
+      "lead": "8–12 weeks before",
+      "outcome": "Partnership strengthened or practical club action agreed.",
+      "links": [
+        {
+          "url": "https://www.reconciliation.org.au/our-work/national-reconciliation-week/",
+          "label": "National Reconciliation Week",
+          "source_name": "Reconciliation Australia",
+          "page_title": "National Reconciliation Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "31 May 2027",
+      "name": "ACT Reconciliation Day",
+      "status": "Confirmed in supplied notes",
+      "activation": "Priority ACT partnership opportunity",
+      "audience": "ACT clubs, associations, Aboriginal sporting organisations and community partners",
+      "connection": "Culturally guided local relationships",
+      "action": "Monitor the official program, engage local partners early and identify clubs already participating. Build relationships without dominating or rebranding community-led activity as Good Sports.",
+      "lead": "",
+      "outcome": "Local partnership and culturally guided follow-up.",
+      "links": [
+        {
+          "url": "https://www.act.gov.au/community/aboriginal-and-torres-strait-islander-peoples/reconciliation-day",
+          "label": "ACT Reconciliation Day",
+          "source_name": "ACT Government — Health and Community Services Directorate",
+          "page_title": "Reconciliation Day",
+          "kind": "event",
+          "verified": true
+        }
+      ],
+      "campaignType": "partnership"
+    }
+  ],
+  "Jun": [
+    {
+      "date": "3 Jun 2027",
+      "name": "Mabo Day",
+      "status": "Fixed annual date",
+      "activation": "Locally guided",
+      "audience": "Clubs or associations undertaking reconciliation activity",
+      "connection": "Learning and respectful local relationships",
+      "action": "Treat it as part of the Reconciliation Week period. Support education or events led by appropriate partners; avoid separate generic outreach without a local relationship.",
+      "lead": "",
+      "outcome": "Community-led activity supported.",
+      "links": [
+        {
+          "url": "https://www.indigenous.gov.au/stories/what-mabo-day",
+          "label": "What is Mabo Day?",
+          "source_name": "Australian Government — Indigenous.gov.au",
+          "page_title": "What is Mabo Day?",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    },
+    {
+      "date": "From 14 Jun 2027 · expected",
+      "name": "Men’s Health Week",
+      "status": "Indicative · organiser confirmation required",
+      "activation": "Targeted",
+      "audience": "Male-dominated, regional, veterans’ or masters clubs and clubs addressing member wellbeing",
+      "connection": "Connection, help-seeking and volunteer wellbeing",
+      "action": "Work with appropriate health partners and frame discussion around connection and club culture. Do not provide clinical or individual health advice.",
+      "lead": "4–6 weeks before",
+      "outcome": "Wellbeing conversation or resource connection.",
+      "links": [
+        {
+          "url": "https://www.menshealthweek.com.au/",
+          "label": "Men’s Health Week campaign",
+          "source_name": "Healthy Male and Western Sydney University Centre for Male Health",
+          "page_title": "Men’s Health Week — 101 Reasons to see your GP",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "20 Jun 2027",
+      "name": "World Refugee Day",
+      "status": "Fixed annual date",
+      "activation": "Targeted / partnership-led",
+      "audience": "Clubs with settlement partnerships, multicultural programs or refugee participation",
+      "connection": "Belonging and family-friendly participation",
+      "action": "Work through settlement services, councils and multicultural organisations. Recognise existing partnerships; do not contact clubs simply because members appear culturally diverse.",
+      "lead": "",
+      "outcome": "Partner introduction or participation pathway supported.",
+      "links": [
+        {
+          "url": "https://www.unhcr.org/us/get-involved/take-action/world-refugee-day",
+          "label": "World Refugee Day",
+          "source_name": "UNHCR (UN Refugee Agency)",
+          "page_title": "World Refugee Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "partnership"
+    }
+  ],
+  "Jul": [
+    {
+      "date": "4–11 Jul 2027 · provisional",
+      "name": "NAIDOC Week",
+      "status": "Indicative until officially announced",
+      "activation": "Core opportunity with Aboriginal leadership",
+      "audience": "All clubs, particularly those with Aboriginal members, teams, partners or community programs",
+      "connection": "Community leadership, belonging and cultural safety",
+      "action": "Start with local Aboriginal organisations and leaders; map local events and attend or support where invited. Ensure stories, imagery, flags and artwork are used appropriately; avoid tokenism.",
+      "lead": "12 weeks where partnership work is required",
+      "outcome": "Relationship strengthened or community-led activity supported.",
+      "links": [
+        {
+          "url": "https://www.naidoc.org.au/about/naidoc-week",
+          "label": "National NAIDOC Week",
+          "source_name": "National NAIDOC Secretariat / National NAIDOC Committee",
+          "page_title": "National NAIDOC Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "1–31 Jul",
+      "name": "Dry July",
+      "status": "Recurring month · verify 2027 campaign details",
+      "activation": "Monitor / targeted",
+      "audience": "Clubs already interested in alcohol-free events, fundraising or member wellbeing",
+      "connection": "Alcohol-free choices and club culture",
+      "action": "Support clubs already choosing to participate; promote appealing alcohol-free options where relevant. Do not position abstinence as a Good Sports requirement.",
+      "lead": "",
+      "outcome": "Alcohol-free choices strengthened at a club event.",
+      "links": [
+        {
+          "url": "https://www.dryjuly.com/2027/register-your-interest",
+          "label": "Dry July 2027 — register your interest",
+          "source_name": "Dry July Foundation",
+          "page_title": "Interested in Dry July 2027?",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    }
+  ],
+  "Aug": [
+    {
+      "date": "4 Aug 2027",
+      "name": "National Aboriginal and Torres Strait Islander Children’s Day",
+      "status": "Fixed annual date",
+      "activation": "Locally guided",
+      "audience": "Junior clubs and clubs with Aboriginal community partnerships",
+      "connection": "Safe, welcoming environments for children and families",
+      "action": "Work through local Aboriginal organisations and junior-participation partners. Develop activities with community input, not on their behalf.",
+      "lead": "",
+      "outcome": "Partnership strengthened or inclusive junior practice identified.",
+      "links": [
+        {
+          "url": "https://www.snaicc.org.au/our-work/campaigns/childrens-day/",
+          "label": "Children’s Day campaign",
+          "source_name": "SNAICC – National Voice for our Children",
+          "page_title": "National Aboriginal and Torres Strait Islander Children’s Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    },
+    {
+      "date": "9–15 Aug 2027",
+      "name": "National Youth Volunteer Week",
+      "status": "Confirmed in supplied notes",
+      "activation": "High-value targeted opportunity",
+      "audience": "Clubs needing younger officials, coaches, committee observers or event volunteers",
+      "connection": "Youth leadership, succession and volunteer sustainability",
+      "action": "Recognise young volunteers and encourage meaningful roles, not just basic tasks. Capture examples of young leaders improving club culture.",
+      "lead": "6–8 weeks before",
+      "outcome": "A leadership pathway established or succession discussion started.",
+      "links": [
+        {
+          "url": "https://www.volunteeringaustralia.org/get-involved/national-youth-volunteer-week/",
+          "label": "National Youth Volunteer Week 2027 campaign page",
+          "source_name": "Volunteering Australia",
+          "page_title": "National Youth Volunteer Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "From 2 Aug 2027 · expected",
+      "name": "Loneliness Awareness Week",
+      "status": "Indicative · verify organiser dates",
+      "activation": "Targeted",
+      "audience": "Regional clubs, older-adult programs, inclusive sport and clubs rebuilding membership",
+      "connection": "Social connection and belonging",
+      "action": "Recognise welcoming participation programs and partner with councils or community-health organisations. Avoid overstating health claims.",
+      "lead": "",
+      "outcome": "Inclusive opportunity promoted or partnership developed.",
+      "links": [
+        {
+          "url": "https://lonelinessawarenessweek.com.au/",
+          "label": "Loneliness Awareness Week Australia",
+          "source_name": "Ending Loneliness Together",
+          "page_title": "Loneliness Awareness Week Australia",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    }
+  ],
+  "Sep": [
+    {
+      "date": "From 1 Sep 2027 · expected",
+      "name": "Women’s Health Week",
+      "status": "Indicative · verify organiser dates",
+      "activation": "Targeted",
+      "audience": "Women’s and girls’ teams, women leaders and codes developing women’s participation",
+      "connection": "Participation, volunteer wellbeing and inclusive activity",
+      "action": "Connect with existing club-led programs and recognise coaches, officials and volunteers as well as players. Use a qualified health partner for health-specific information.",
+      "lead": "",
+      "outcome": "Club activity recognised or partnership established.",
+      "links": [
+        {
+          "url": "https://www.jeanhailes.org.au/get-involved/womens-health-week/",
+          "label": "Jean Hailes Women’s Health Week",
+          "source_name": "Jean Hailes for Women’s Health",
+          "page_title": "Women’s Health Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "9 Sep 2027",
+      "name": "R U OK?Day",
+      "status": "Confirmed in supplied notes",
+      "activation": "Core annual opportunity · targeted delivery",
+      "audience": "All community sporting clubs, especially those with wellbeing activity or strong volunteer leaders",
+      "connection": "Connection, member wellbeing and supportive club culture",
+      "action": "Use R U OK? sport/community resources and encourage year-round check-ins. Share conversation guidance, not counselling; R U OK? is not crisis intervention or expert counselling. Avoid one-off promotion without follow-up.",
+      "lead": "6–8 weeks before",
+      "outcome": "Club check-in, wellbeing action or support resources adopted.",
+      "links": [
+        {
+          "url": "https://www.ruok.org.au/r-u-ok-day",
+          "label": "Plan your R U OK?Day activities",
+          "source_name": "R U OK?",
+          "page_title": "ASK R U OK? ANY DAY",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "10 Sep 2027",
+      "name": "World Suicide Prevention Day",
+      "status": "Fixed annual date per supplied notes",
+      "activation": "Targeted · safeguarding required",
+      "audience": "Clubs already undertaking mental-health or wellbeing activity",
+      "connection": "Help-seeking, connection and referral awareness",
+      "action": "Work through recognised organisations and approved resources. Do not ask coordinators or volunteers to counsel; make appropriate support/referral information visible.",
+      "lead": "",
+      "outcome": "Appropriate resources shared and referral pathways understood.",
+      "links": [
+        {
+          "url": "https://www.iasp.info/wspd/",
+          "label": "World Suicide Prevention Day",
+          "source_name": "International Association for Suicide Prevention (IASP)",
+          "page_title": "World Suicide Prevention Day 2026",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    }
+  ],
+  "Oct": [
+    {
+      "date": "1–31 Oct",
+      "name": "Mental Health Month",
+      "status": "Recurring NSW period · 2027 details pending",
+      "activation": "Core theme · targeted activity",
+      "audience": "All clubs, prioritising those already addressing wellbeing",
+      "connection": "Supportive club culture, help-seeking, volunteering and connection",
+      "action": "Use October as a planning window rather than contacting every club. Recognise existing practice and connect ready clubs to appropriate external organisations. Coordinators are not mental-health practitioners.",
+      "lead": "",
+      "outcome": "A club wellbeing action progressed or partner introduced.",
+      "links": [
+        {
+          "url": "https://www.mentalhealthaustralia.org.au/get-involved/world-mental-health-day-2026/",
+          "label": "Mental Health Australia — annual campaign information",
+          "source_name": "Mental Health Australia",
+          "page_title": "2026 World Mental Health Day",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "10 Oct 2027",
+      "name": "World Mental Health Day",
+      "status": "Fixed annual date per supplied notes",
+      "activation": "Targeted",
+      "audience": "Clubs already engaged in wellbeing activity",
+      "connection": "Help-seeking and supportive club culture",
+      "action": "Use this within the broader Mental Health Month plan rather than creating a separate campaign. Connect clubs to appropriate expert resources.",
+      "lead": "",
+      "outcome": "Existing wellbeing action supported.",
+      "links": [
+        {
+          "url": "https://www.who.int/campaigns/world-mental-health-day",
+          "label": "World Mental Health Day",
+          "source_name": "World Health Organization (WHO)",
+          "page_title": "World Mental Health Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "October 2027 · dates TBC",
+      "name": "National Carers Week",
+      "status": "2027 dates not confirmed",
+      "activation": "Targeted",
+      "audience": "Clubs with carers among players, committee members, parents or volunteers",
+      "connection": "Volunteer wellbeing and inclusive participation",
+      "action": "Recognise flexibility without asking people to disclose caring responsibilities. Work with local carers organisations and consider how scheduling can accommodate carers.",
+      "lead": "",
+      "outcome": "Carer-inclusive practice recognised or partnership established.",
+      "links": [
+        {
+          "url": "https://carersweek.com.au/",
+          "label": "National Carers Week official campaign",
+          "source_name": "Carers Australia / National Carer Network",
+          "page_title": "National Carers Week",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    }
+  ],
+  "Nov": [
+    {
+      "date": "1–30 Nov",
+      "name": "Movember / Men’s Health Awareness Month",
+      "status": "Recurring annual campaign",
+      "activation": "Targeted · club-led",
+      "audience": "Male-dominated, regional or masters clubs and clubs already participating",
+      "connection": "Mental health, connection, help-seeking and alcohol culture",
+      "action": "Support club-led activity rather than competing campaigns. Link it to a practical club-culture action; avoid focusing only on fundraising or moustaches.",
+      "lead": "",
+      "outcome": "Meaningful wellbeing activity or culture conversation.",
+      "links": [
+        {
+          "url": "https://movember.com/about-us",
+          "label": "About Movember",
+          "source_name": "Movember",
+          "page_title": "Changing the face of men’s health",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "19 Nov 2027",
+      "name": "International Men’s Day",
+      "status": "Fixed annual date per supplied notes",
+      "activation": "Monitor / targeted",
+      "audience": "Clubs already undertaking men’s wellbeing or leadership activity",
+      "connection": "Recognition and wellbeing",
+      "action": "Incorporate it into the broader November men’s-health period rather than creating a competing stand-alone campaign.",
+      "lead": "",
+      "outcome": "Existing local activity recognised.",
+      "links": [
+        {
+          "url": "https://internationalmensday.com/",
+          "label": "Official International Men’s Day site",
+          "source_name": "International Men’s Day",
+          "page_title": "International Mens Day",
+          "kind": "campaign",
+          "verified": true
+        }
+      ],
+      "campaignType": "local"
+    },
+    {
+      "date": "Sport-dependent",
+      "name": "Presentation & end-of-season celebrations",
+      "status": "Seasonal window · dates vary by sport",
+      "activation": "Core operational window",
+      "audience": "Winter sports and calendar-year competitions",
+      "connection": "Alcohol management, safe transport and family-friendly events",
+      "action": "Contact clubs before events; prioritise identified support needs. Promote food, alcohol-free choices, responsible service and transport planning.",
+      "lead": "",
+      "outcome": "Practical safe-celebration measures adopted.",
+      "links": [
+        {
+          "url": "https://goodsports.com.au/resource-documents/alcohol-management-toolkit/",
+          "label": "Good Sports Alcohol Management Toolkit",
+          "source_name": "Good Sports / Alcohol and Drug Foundation",
+          "page_title": "Alcohol Management Toolkit",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "seasonal"
+    }
+  ],
+  "Dec": [
+    {
+      "date": "3 Dec 2027",
+      "name": "International Day of People with Disability",
+      "status": "Fixed annual date per supplied notes",
+      "activation": "Core inclusion opportunity",
+      "audience": "All-abilities clubs, inclusive mainstream programs, councils and disability-sport partners",
+      "connection": "Accessible environments, communications and participation",
+      "action": "Connect councils, disability organisations and clubs. Ask what barriers people identify; centre people with disability in planning and storytelling. Avoid tokenistic activity designed without them.",
+      "lead": "8–12 weeks before",
+      "outcome": "Accessibility improvement, inclusive club recognition or partnership developed.",
+      "links": [
+        {
+          "url": "https://www.idpwd.gov.au/",
+          "label": "Australian IDPwD campaign site",
+          "source_name": "Australian Government, Department of Health, Disability and Ageing",
+          "page_title": "International Day of People with Disability",
+          "kind": "campaign",
+          "verified": true
+        },
+        {
+          "url": "https://www.un.org/en/observances/day-of-persons-with-disabilities",
+          "label": "UN observance page",
+          "source_name": "United Nations",
+          "page_title": "International Day of Persons with Disabilities, 3 December",
+          "kind": "event",
+          "verified": true
+        }
+      ],
+      "campaignType": "core"
+    },
+    {
+      "date": "5 Dec 2027",
+      "name": "International Volunteer Day",
+      "status": "Fixed annual date per supplied notes",
+      "activation": "Targeted recognition",
+      "audience": "All clubs, especially those finishing their annual cycle",
+      "connection": "Volunteer recognition and committee relationships",
+      "action": "Use as a secondary recognition opportunity after National Volunteer Week. Recognise a specific contribution and prioritise volunteers who achieved something during the year.",
+      "lead": "",
+      "outcome": "Volunteer contribution recognised.",
+      "links": [
+        {
+          "url": "https://www.un.org/en/observances/volunteer-day",
+          "label": "International Volunteer Day — 5 December",
+          "source_name": "United Nations",
+          "page_title": "International Volunteer Day 5 December",
+          "kind": "event",
+          "verified": true
+        }
+      ],
+      "campaignType": "targeted"
+    },
+    {
+      "date": "December",
+      "name": "Christmas & end-of-year functions",
+      "status": "Seasonal window",
+      "activation": "Core operational period",
+      "audience": "Clubs holding committee, sponsor or member functions",
+      "connection": "Safe celebrations, alcohol management, transport and inclusion",
+      "action": "Start contact in October or early November. Keep guidance practical and concise; help clubs plan before events rather than waiting for an incident.",
+      "lead": "Start in Oct/early Nov",
+      "outcome": "Safe-event planning strengthened.",
+      "links": [
+        {
+          "url": "https://business.gov.au/news/how-to-have-a-safe-and-happy-work-party",
+          "label": "Safe and happy work party guidance",
+          "source_name": "business.gov.au (Australian Government)",
+          "page_title": "How to have a safe and happy work party",
+          "kind": "official_resource",
+          "verified": true
+        }
+      ],
+      "campaignType": "seasonal"
+    }
+  ]
+};
 let selectedMonth=0,selectedCategory='all',selectedPhase='all',selectedSport=null;
 const svg=document.getElementById('wheel');
 let monthArmDragging=false,monthArmPointerId=null;
@@ -198,13 +1063,58 @@ function drawWheel(){hideWheelTooltip();svg.innerHTML='';const ns='http://www.w3
 const dashboardSportAliases={'AFL':['afl','afl canberra'],'Rugby League':['rugby league','crrl','nswrl'],'Rugby Union':['rugby union'],'Soccer':['soccer','capital football','dribl','kanga cup','federation cup'],'Cricket':['cricket'],'Touch Football':['touch football','touch'],'Softball':['softball'],'Swimming':['swimming'],'Surf Life Saving':['surf life saving','lifesaving','surf lifesaving'],'Basketball':['basketball'],'Netball':['netball'],'Volleyball':['volleyball'],'Hockey':['hockey'],'Golf':['golf'],'Tennis':['tennis']};
 function shouldDisplayStrategyItem(item,activeSport){if(!activeSport)return true;const sport=sports.find(s=>s.code===activeSport);if(!sport)return true;const text=item.toLowerCase().replace(/[-_/]+/g,' ');const aliases=dashboardSportAliases[activeSport]||[activeSport.toLowerCase()];if(aliases.some(alias=>text.includes(alias)))return true;if(/\bkoori knockout\b|\bmulti code\b|\bcross code\b/.test(text))return true;let group=null;if(/\bwinter\b/.test(text)&&/\b(sport|sports|code|codes|club|clubs|committee|committees|field|fields|season)\b/.test(text))group='field-winter';if(/\bsummer\b/.test(text)&&/\b(sport|sports|code|codes|club|clubs|committee|committees|field|fields|season)\b/.test(text))group='field-summer';if(/\bindoor\b/.test(text)&&/\b(court|courts|sport|sports|competition|competitions)\b/.test(text))group='indoor-court';if(/\b(aquatic|coastal)\b/.test(text))group='aquatic';if(group)return sport.category===group;const taggedForOtherSport=sports.some(other=>other.code!==activeSport&&(dashboardSportAliases[other.code]||[other.code.toLowerCase()]).some(alias=>text.includes(alias)));return !taggedForOtherSport}
 function renderStrategyList(id,items,emptyMessage=''){const list=document.getElementById(id);list.replaceChildren(...items.map(entry=>{const li=document.createElement('li');const split=entry.indexOf('|');if(split>0){const label=document.createElement('strong');label.textContent=entry.slice(0,split).trim();li.append(label,document.createTextNode(`: ${entry.slice(split+1).trim()}`))}else li.textContent=entry;return li}));if(!items.length&&emptyMessage){const li=document.createElement('li');li.className='strategy-empty';li.textContent=emptyMessage;list.appendChild(li)}}
-function updateCoordinatorDashboard(monthKey){const data=coordinatorStrategyData[monthKey];if(!data)return;const title=document.getElementById('strategy-current-focus');title.textContent=`Current Focus: ${selectedSport?`${selectedSport} · `:''}${data.focusText}`;document.getElementById('strategy-filter-note').hidden=!selectedSport;const capacity=document.getElementById('badge-capacity');capacity.className=`strategy-badge capacity-${data.capacityLevel}`;capacity.textContent=data.capacity;const blackout=document.getElementById('badge-blackout');blackout.className=`strategy-badge ${data.blackout?'blackout-active':'blackout-clear'}`;blackout.textContent=data.blackout?`BLACKOUT ALERT · ${data.blackout}`:'No blackout zones';const banner=document.getElementById('turf-turnover-banner');banner.classList.toggle('is-critical',data.criticalTurf);document.getElementById('turf-turnover-text').textContent=data.turfInfo;const risks=document.getElementById('panel-risks');risks.classList.toggle('is-alert',Boolean(data.blackout));const filter=items=>items.filter(item=>shouldDisplayStrategyItem(item,selectedSport));const workload=filter(data.workloadCrunch||[]);document.getElementById('workload-crunch-banner').hidden=Boolean(selectedSport)&&workload.length===0;renderStrategyList('workload-crunch-list',workload,selectedSport?'':'No portal checks listed this month.');const opportunities=filter(data.opportunities||[]);renderStrategyList('opportunities-list',opportunities,selectedSport?`No engagement items tagged for ${selectedSport} this month.`:'No engagement targets listed this month.');const tournaments=filter(data.tournaments||[]);renderStrategyList('tournaments-list',tournaments,selectedSport?`No tournament watchlist entries tagged for ${selectedSport} this month.`:'No tournament watchlist entries this month.');const fundingItems=filter(data.commercialFunding||[]);renderStrategyList('commercial-funding-list',fundingItems,selectedSport?`No funding checks tagged for ${selectedSport} this month.`:'No funding checks listed this month.');renderStrategyList('risks-list',data.risks||[])}
+function renderCampaignCalendar(monthKey){
+ const fullMonth={Jan:'January',Feb:'February',Mar:'March',Apr:'April',May:'May',Jun:'June',Jul:'July',Aug:'August',Sep:'September',Oct:'October',Nov:'November',Dec:'December'};
+ const typeLabels={core:'Core opportunity',targeted:'Targeted',partnership:'Partnership-led',local:'Monitor / locally guided',seasonal:'Seasonal / operational'};
+ const typeOrder={core:0,targeted:1,partnership:2,local:3,seasonal:4};
+ document.getElementById('campaign-calendar-title').textContent=`${fullMonth[monthKey]||monthKey} 2027`;
+ document.getElementById('campaign-calendar-lens').textContent=selectedSport?`${selectedSport} focus · review club fit`:'All codes';
+ const list=document.getElementById('campaign-events');
+ const events=coordinatorCampaignCalendar2027[monthKey]||[];
+ const linkMode=document.getElementById('campaign-link-filter').value;
+ const typeMode=document.getElementById('campaign-type-filter').value;
+ const sortMode=document.getElementById('campaign-sort').value;
+ const verifiedLinks=item=>(item.links||[]).filter(link=>link.verified);
+ const directLinks=item=>verifiedLinks(item).filter(link=>link.kind==='campaign'||link.kind==='event');
+ const resourceLinks=item=>verifiedLinks(item).filter(link=>link.kind==='official_resource');
+ const filtered=events.filter(item=>{
+  const verified=verifiedLinks(item),direct=directLinks(item),resources=resourceLinks(item);
+  const linkMatch=linkMode==='all'||(linkMode==='direct'&&direct.length>0)||(linkMode==='resource'&&resources.length>0)||(linkMode==='none'&&verified.length===0);
+  return linkMatch&&(typeMode==='all'||item.campaignType===typeMode);
+ });
+ const rankByLink=item=>directLinks(item).length?0:resourceLinks(item).length?1:2;
+ const sorted=filtered.map((item,index)=>({item,index})).sort((a,b)=>{
+  if(sortMode==='links')return rankByLink(a.item)-rankByLink(b.item)||a.index-b.index;
+  if(sortMode==='type')return (typeOrder[a.item.campaignType]??99)-(typeOrder[b.item.campaignType]??99)||a.index-b.index;
+  return a.index-b.index;
+ }).map(entry=>entry.item);
+ document.getElementById('campaign-filter-summary').textContent=`Showing ${sorted.length} of ${events.length} cards`;
+ list.replaceChildren(...sorted.map(item=>{
+  const card=document.createElement('article');card.className='campaign-event';
+  const top=document.createElement('div');top.className='campaign-event-top';
+  const date=document.createElement('span');date.className='campaign-date';date.textContent=item.date;
+  const status=document.createElement('span');status.className='campaign-status '+(/indicative|expected|research|required|pending|not confirmed|tbc|provisional/i.test(item.status)?'provisional':/confirmed|fixed/i.test(item.status)?'confirmed':'seasonal');status.textContent=item.status;top.append(date,status);card.appendChild(top);
+  const title=document.createElement('h5');title.textContent=item.name;card.appendChild(title);
+  let links=verifiedLinks(item);
+  if(linkMode==='direct')links=directLinks(item);else if(linkMode==='resource')links=resourceLinks(item);else if(linkMode==='none')links=[];
+  if(links.length){const linksNav=document.createElement('nav');linksNav.className='campaign-links';linksNav.setAttribute('aria-label',`${item.name} official websites and resources`);links.forEach(entry=>{const link=document.createElement('a');link.className='campaign-link';link.href=entry.url;link.target='_blank';link.rel='noopener noreferrer';link.title=`${entry.page_title} — ${entry.source_name}`;link.setAttribute('aria-label',`Open ${entry.label} from ${entry.source_name} in a new tab`);const linkText=document.createElement('span');linkText.textContent=`${entry.kind==='official_resource'?'Official guidance':'Official site'}: ${entry.label}`;const icon=document.createElementNS('http://www.w3.org/2000/svg','svg');icon.setAttribute('viewBox','0 0 16 16');icon.setAttribute('class','external-link-icon');icon.setAttribute('aria-hidden','true');icon.setAttribute('focusable','false');const p1=document.createElementNS('http://www.w3.org/2000/svg','path');p1.setAttribute('d','M9 2h5v5h-2V5.41L7.71 9.7 6.3 8.29 10.59 4H9V2z');const p2=document.createElementNS('http://www.w3.org/2000/svg','path');p2.setAttribute('d','M12 9v5H2V4h5v2H4v6h6V9h2z');icon.append(p1,p2);link.append(linkText,icon);linksNav.appendChild(link)});card.appendChild(linksNav)}
+  const typeRow=document.createElement('div');typeRow.className='campaign-type-row';const activation=document.createElement('span');activation.className='campaign-activation';activation.textContent=item.activation;const typeBadge=document.createElement('span');typeBadge.className='campaign-type-badge';typeBadge.textContent=typeLabels[item.campaignType]||'Other';if(item.activation.trim().toLowerCase()!==typeBadge.textContent.trim().toLowerCase())typeRow.appendChild(activation);typeRow.appendChild(typeBadge);card.appendChild(typeRow);
+  const audience=document.createElement('p');audience.className='campaign-detail';audience.innerHTML='<strong>Relevant clubs:</strong> ';audience.appendChild(document.createTextNode(item.audience));card.appendChild(audience);
+  const connection=document.createElement('p');connection.className='campaign-detail campaign-connection';connection.innerHTML='<strong>Good Sports fit:</strong> ';connection.appendChild(document.createTextNode(item.connection));card.appendChild(connection);
+  const action=document.createElement('p');action.className='campaign-action';action.innerHTML='<strong>Coordinator move:</strong> ';action.appendChild(document.createTextNode(item.action));card.appendChild(action);
+  if(item.lead||item.outcome){const footer=document.createElement('p');footer.className='campaign-footer';if(item.lead){const lead=document.createElement('span');lead.textContent=`Lead time: ${item.lead}`;footer.appendChild(lead)}if(item.outcome){const outcome=document.createElement('span');outcome.textContent=`Intended outcome: ${item.outcome}`;footer.appendChild(outcome)}card.appendChild(footer)}
+  return card;
+ }));
+ if(!sorted.length){const empty=document.createElement('p');empty.className='campaign-empty';empty.textContent='No cards match these filters this month. Try changing a filter.';list.appendChild(empty)}
+}
+function updateCoordinatorDashboard(monthKey){const data=coordinatorStrategyData[monthKey];if(!data)return;const title=document.getElementById('strategy-current-focus');title.textContent=`Current Focus: ${selectedSport?`${selectedSport} · `:''}${data.focusText}`;document.getElementById('strategy-filter-note').hidden=!selectedSport;const capacity=document.getElementById('badge-capacity');capacity.className=`strategy-badge capacity-${data.capacityLevel}`;capacity.textContent=data.capacity;const blackout=document.getElementById('badge-blackout');blackout.className=`strategy-badge ${data.blackout?'blackout-active':'blackout-clear'}`;blackout.textContent=data.blackout?`BLACKOUT ALERT · ${data.blackout}`:'No blackout zones';const banner=document.getElementById('turf-turnover-banner');banner.classList.toggle('is-critical',data.criticalTurf);document.getElementById('turf-turnover-text').textContent=data.turfInfo;const risks=document.getElementById('panel-risks');risks.classList.toggle('is-alert',Boolean(data.blackout));const filter=items=>items.filter(item=>shouldDisplayStrategyItem(item,selectedSport));const workload=filter(data.workloadCrunch||[]);document.getElementById('workload-crunch-banner').hidden=Boolean(selectedSport)&&workload.length===0;renderStrategyList('workload-crunch-list',workload,selectedSport?'':'No portal checks listed this month.');const opportunities=filter(data.opportunities||[]);renderStrategyList('opportunities-list',opportunities,selectedSport?`No engagement items tagged for ${selectedSport} this month.`:'No engagement targets listed this month.');const tournaments=filter(data.tournaments||[]);renderStrategyList('tournaments-list',tournaments,selectedSport?`No tournament watchlist entries tagged for ${selectedSport} this month.`:'No tournament watchlist entries this month.');const fundingItems=filter(data.commercialFunding||[]);renderStrategyList('commercial-funding-list',fundingItems,selectedSport?`No funding checks tagged for ${selectedSport} this month.`:'No funding checks listed this month.');renderStrategyList('risks-list',data.risks||[]);renderCampaignCalendar(monthKey)}
 function update(){const active=activeSports();drawWheel();document.getElementById('month-slider').value=String(selectedMonth);document.getElementById('month-output').textContent=months[selectedMonth];document.getElementById('focus').textContent=selectedSport?`${selectedSport} · ${months[selectedMonth]}`:`${months[selectedMonth]} Planning`;document.getElementById('pre-count').textContent=`${sports.filter(s=>(selectedCategory==='all'||s.category===selectedCategory)&&getPhase(s,selectedMonth)==='pre').length} Codes`;
  const overlaps=months.map((m,i)=>({m,n:sports.filter(s=>(selectedCategory==='all'||s.category===selectedCategory)&&getPhase(s,i)==='pre').length})).sort((a,b)=>b.n-a.n);const peak=overlaps[0]?.n||0;document.getElementById('cross-over').textContent=peak?overlaps.filter(x=>x.n===peak).map(x=>x.m).join(' & '):'—';
  const list=document.getElementById('code-list');list.innerHTML='';active.forEach(s=>{const phase=getPhase(s,selectedMonth),item=document.createElement('button');item.type='button';item.className='code-row';item.setAttribute('aria-pressed',String(selectedSport===s.code));item.setAttribute('aria-label',selectedSport===s.code?`Show all sports; ${s.code} is focused`:`Focus ${s.code} on the season wheel`);item.title=selectedSport===s.code?'Click to show all sports':'Click to isolate this sport on the wheel';item.addEventListener('click',()=>{selectedSport=selectedSport===s.code?null:s.code;update()});const name=document.createElement('span');name.textContent=s.code;const badge=document.createElement('span');badge.className=`badge ${phase}`;badge.style.backgroundColor=phaseColor(phase);badge.textContent=phaseShort(phase);item.append(name,badge);list.appendChild(item)});if(!active.length)list.innerHTML='<div class="empty">No codes match this month and phase. Try another phase filter.</div>';
  const rec=selectedMonth===8?'Winter finals are active as summer-field pre-season ramps up. Prioritise incoming committees and avoid overloading clubs in finals.':selectedMonth===7?'Aquatic pre-season is a key compliance window. Share safety and roster guidance early.':selectedMonth===0||selectedMonth===6?'Indoor codes may be navigating grading or mid-year transitions. Prefer concise, self-paced resources.':selectedPhase==='off'?'This is a quieter off-season window for club planning, governance support and targeted capacity building.':'Focus coordinator outreach in lower-pressure windows and target face-to-face support when club calendars are less congested.';document.getElementById('recommendation').textContent=rec;updateCoordinatorDashboard(months[selectedMonth]);
 }
-window.addEventListener('resize',drawWheel);document.getElementById('month-slider').addEventListener('input',e=>{selectedMonth=Number(e.target.value);update()});document.querySelectorAll('.filters .pill').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters .pill').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');selectedCategory=b.dataset.category;if(selectedSport&&!sports.some(s=>s.code===selectedSport&&(selectedCategory==='all'||s.category===selectedCategory)))selectedSport=null;update()}));document.querySelectorAll('.phase-tabs button').forEach(b=>b.addEventListener('click',()=>{if(b.hidden)return;document.querySelectorAll('.phase-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedPhase=b.dataset.phase;update()}));document.getElementById('reset-custom').addEventListener('click',()=>{phaseSettings=JSON.parse(JSON.stringify(defaultPhaseSettings));savePhaseSettings();renderPhaseCustomization();applyPhaseSettings()});applyPhaseSettings();
+window.addEventListener('resize',drawWheel);document.getElementById('month-slider').addEventListener('input',e=>{selectedMonth=Number(e.target.value);update()});document.querySelectorAll('.filters .pill').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.filters .pill').forEach(x=>{x.classList.remove('active');x.setAttribute('aria-pressed','false')});b.classList.add('active');b.setAttribute('aria-pressed','true');selectedCategory=b.dataset.category;if(selectedSport&&!sports.some(s=>s.code===selectedSport&&(selectedCategory==='all'||s.category===selectedCategory)))selectedSport=null;update()}));document.querySelectorAll('.phase-tabs button').forEach(b=>b.addEventListener('click',()=>{if(b.hidden)return;document.querySelectorAll('.phase-tabs button').forEach(x=>x.classList.remove('active'));b.classList.add('active');selectedPhase=b.dataset.phase;update()}));document.getElementById('reset-custom').addEventListener('click',()=>{phaseSettings=JSON.parse(JSON.stringify(defaultPhaseSettings));savePhaseSettings();renderPhaseCustomization();applyPhaseSettings()});['campaign-link-filter','campaign-type-filter','campaign-sort'].forEach(id=>document.getElementById(id).addEventListener('change',()=>renderCampaignCalendar(months[selectedMonth])));
+applyPhaseSettings();
 </script>
 </body>
 </html>
